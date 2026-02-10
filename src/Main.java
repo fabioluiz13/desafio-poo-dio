@@ -1,62 +1,59 @@
-import br.com.dio.desafio.dominio.Bootcamp;
-import br.com.dio.desafio.dominio.Curso;
-import br.com.dio.desafio.dominio.Dev;
-import br.com.dio.desafio.dominio.Mentoria;
-
-import java.time.LocalDate;
+import br.com.dio.desafio.dominio.fabio.Banco;
+import br.com.dio.desafio.dominio.fabio.Cliente;
+import br.com.dio.desafio.dominio.fabio.ContaPessoaFisica;
+import br.com.dio.desafio.dominio.fabio.ContaPessoaJuridica;
+import br.com.dio.desafio.dominio.fabio.ContaPoupanca;
 
 public class Main {
+
     public static void main(String[] args) {
-        Curso curso1 = new Curso();
-        curso1.setTitulo("curso java");
-        curso1.setDescricao("descrição curso java");
-        curso1.setCargaHoraria(8);
 
-        Curso curso2 = new Curso();
-        curso2.setTitulo("curso js");
-        curso2.setDescricao("descrição curso js");
-        curso2.setCargaHoraria(4);
+        ContaPessoaFisica contaPF = new ContaPessoaFisica();
+        contaPF.setNumero("001");
+        contaPF.depositar(1000);
 
-        Mentoria mentoria = new Mentoria();
-        mentoria.setTitulo("mentoria de java");
-        mentoria.setDescricao("descrição mentoria java");
-        mentoria.setData(LocalDate.now());
 
-        /*System.out.println(curso1);
-        System.out.println(curso2);
-        System.out.println(mentoria);*/
+        ContaPessoaJuridica contaPJ = new ContaPessoaJuridica();
+        contaPJ.setNumero("002");
+        contaPJ.depositar(5000);
 
-        Bootcamp bootcamp = new Bootcamp();
-        bootcamp.setNome("Bootcamp Java Developer");
-        bootcamp.setDescricao("Descrição Bootcamp Java Developer");
-        bootcamp.getConteudos().add(curso1);
-        bootcamp.getConteudos().add(curso2);
-        bootcamp.getConteudos().add(mentoria);
+        ContaPoupanca poupanca = new ContaPoupanca();
+        poupanca.setNumero("003");
+        poupanca.depositar(2000);
 
-        Dev devCamila = new Dev();
-        devCamila.setNome("Camila");
-        devCamila.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        devCamila.progredir();
-        devCamila.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        System.out.println("Conteúdos Concluídos Camila:" + devCamila.getConteudosConcluidos());
-        System.out.println("XP:" + devCamila.calcularTotalXp());
+        Banco banco = new Banco();
+        banco.setNome("Banco Bradesco");
 
-        System.out.println("-------");
+        Cliente clienteJose = new Cliente();
+        clienteJose.setNome("Jose");
+        clienteJose.abrirConta(banco, contaPF);
+        clienteJose.abrirConta(banco, poupanca);
 
-        Dev devJoao = new Dev();
-        devJoao.setNome("Joao");
-        devJoao.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        devJoao.progredir();
-        devJoao.progredir();
-        devJoao.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        System.out.println("Conteúdos Concluidos João:" + devJoao.getConteudosConcluidos());
-        System.out.println("XP:" + devJoao.calcularTotalXp());
+        System.out.printf("As contas de %s são: %s%n", clienteJose.getNome(), clienteJose.getContas());
+
+        contaPF.sacar(200);
+        poupanca.aplicarRendimento();
+        System.out.println();
+
+        System.out.println("Apos operações");
+        System.out.printf("As contas de %s ficaram assim: %s%n", clienteJose.getNome(), clienteJose.getContas());
+        System.out.println("Saldo atual: " + contaPF.getSaldo());
+        System.out.println();
+
+        Cliente clienteJoao = new Cliente();
+        clienteJoao.setNome("João");
+        clienteJoao.abrirConta(banco, contaPJ);
+        System.out.println();
+
+        System.out.printf("As contas de %s é = %s %n", clienteJoao.getNome(), clienteJoao.getContas());
+
+        contaPJ.sacar(1000);
+
+        System.out.println("Apos operações");
+        System.out.printf("As contas de %s ficaram assim: %s%n", clienteJoao.getNome(), clienteJoao.getContas());
+        System.out.println("Saldo atual: " +  contaPJ.getSaldo());
+
+
 
     }
 
